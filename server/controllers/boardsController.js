@@ -2,6 +2,31 @@ const Board = require("../models/board");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
+const getBoard = async (req, res, next) => {
+  const id = req.params.id;
+
+  try {
+    const answer = await Board.findById(id).populate({
+      path:"lists",
+      populate: {
+        path: "cards",
+        populate: {
+          path: "actions",
+        },
+      },
+    });
+
+    if (answer) {
+      res.json({ answer });
+    } else {
+      res.status(404).json({error: "That board does not exist"})
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).send({error: "no"});
+  }
+}
+
 const getBoards = (req, res, next) => {
   Board.find({}, "title _id createdAt updatedAt").then((boards) => {
     res.json({
@@ -27,5 +52,6 @@ const createBoard = (req, res, next) => {
   }
 };
 
+exports.getBoard = getBoard;
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
