@@ -8,7 +8,7 @@ const SingleList = ({ list }) => {
   const tempCards = useSelector(state => state.cards)
   const cards = tempCards.filter(card => list._id === card.listId);
   console.log('Cards: ', cards)
-  
+
   return (
     <div className="list-wrapper add-dropdown-active">
       <div className="list-background">
@@ -28,7 +28,7 @@ const SingleList = ({ list }) => {
           <div id="cards-container" data-id="list-1-cards">
             {cards.map(card => <SingleCard key={card._id} card={card} />)}
           </div>
-          <div className="add-dropdown add-bottom">
+          <div className="add-dropdown add-bottom active-card">
             <div className="card">
               <div className="card-info"></div>
               <textarea name="add-card"></textarea>
