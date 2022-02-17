@@ -1,6 +1,10 @@
 const Board = require("../models/board");
+require("../models/list");
+require("../models/card");
+require("../models/action");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+
 
 const getBoard = async (req, res, next) => {
   const id = req.params.id;
