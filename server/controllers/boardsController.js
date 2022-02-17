@@ -10,7 +10,7 @@ const getBoard = async (req, res, next) => {
   const id = req.params.id;
 
   try {
-    const answer = await Board.findById(id).populate({
+    const board = await Board.findById(id).populate({
       path:"lists",
       populate: {
         path: "cards",
@@ -20,14 +20,13 @@ const getBoard = async (req, res, next) => {
       },
     });
 
-    if (answer) {
-      res.json({ answer });
+    if (board) {
+      res.json({ board });
     } else {
       res.status(404).json({error: "That board does not exist"})
     }
   } catch (err) {
-    console.log(err)
-    res.status(500).send({error: "no"});
+    res.status(500).send({error: "Server Error....no", err});
   }
 }
 
