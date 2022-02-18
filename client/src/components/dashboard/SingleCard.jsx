@@ -19,7 +19,9 @@ const SingleCard = ({card}) => {
         </div>
         <div className="card-icons">
           <i className="clock-icon sm-icon overdue-recent completed">
-            {card.dueDate}
+            {
+              new Date(card.dueDate).toLocaleDateString()  
+            }
           </i>
           <i className="description-icon sm-icon"></i>
           <i className="comment-icon sm-icon"></i>

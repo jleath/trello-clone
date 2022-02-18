@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ActionSchema = new Schema({
   description: String,
   cardId: {
-    type: Number,
+    type: Schema.Types.ObjectId,
     required: [true, "Board ID is required"],
   },
 },

@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBoard, fetchBoards } from "../../actions/BoardActions";
+import { createList } from "../../actions/ListActions";
 import SingleList from "./SingleList";
-
-
 
 const Header = ({ board }) => {
   return(
@@ -24,19 +23,66 @@ const Header = ({ board }) => {
   )
 };
 
-const Main = ({lists}) => {
+const Main = ({ lists, boardId }) => {
+  //console.log("lists:", lists);
+  const [ addingList, setAddingList ] = useState(false);
+  const [ newListTitle, setNewListTitle ] = useState("");
+  const dispatch = useDispatch();
+
+  const generateNewListClass = () => {
+    if (addingList) {
+      return "new-list selected";
+    }
+    return "new-list";
+  };
+
+  const toggleAddingList = e => {
+    e.preventDefault();
+    setAddingList(!addingList);
+  };
+
+  const handleNewListSubmit = e => {
+    e.preventDefault();
+    if (newListTitle) {
+      dispatch(createList(boardId, newListTitle));
+      toggleAddingList(e);
+      setNewListTitle("");
+    }
+  };
+
   return (
     <main>
       <div id="list-container" className="list-container">
         <div id="existing-lists" className="existing-lists">
           {lists.map(list => <SingleList key={list._id} list={list} />)}
         </div>
-        <div id="new-list" className="new-list">
-          <span>Add a list...</span>
-          <input type="text" placeholder="Add a list..." />
+        <div
+          id="new-list"
+          className={generateNewListClass()}
+        >
+          <span
+            onClick={toggleAddingList}
+          >
+            Add a list...
+          </span>
+          <input
+            type="text"
+            placeholder="Add a list..."
+            value={newListTitle}
+            onChange={e => setNewListTitle(e.target.value)}
+          />
           <div>
-            <input type="submit" className="button" value="Save" />
-            <i className="x-icon icon"></i>
+            <input
+              type="submit"
+              className="button"
+              value="Save"
+              onClick={handleNewListSubmit}
+            />
+            <i
+              className="x-icon icon"
+              onClick={toggleAddingList}
+            >
+            </i>
           </div>
         </div>
       </div>
@@ -149,8 +195,8 @@ const SingleBoard = () => {
   }, [dispatch])
 
   const lists = useSelector(state => state.lists);
-  
-  
+
+
 
 
   const board = useSelector(state => state.boards.find(board => board._id === id));
@@ -162,11 +208,11 @@ const SingleBoard = () => {
   }
 
 
-  
+
   return (
     <>
       <Header board={board}/>
-      <Main lists={lists}/>
+      <Main lists={lists} boardId={board._id}/>
       <MenuSidebar />
       <div id="modal-container"></div>
       <div id="dropdown-container"></div>

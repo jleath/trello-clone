@@ -7,7 +7,7 @@ const ListSchema = new Schema({
     required: [true, 'The List title is required'],
   },
   boardId: {
-    type: Number,
+    type: Schema.Types.ObjectId,
     required: [true, "Board ID is required"],
   },
   position: {
