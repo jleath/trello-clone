@@ -26,9 +26,29 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
+  getBoard: function(id, callback) {
+    return axios
+      .get(routes.BOARDS_INDEX_URL + `/${id}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
   createBoard: function(board, callback) {
     return axios
       .post(routes.CREATE_BOARD_URL, {board})
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  createList: function(boardId, listTitle, callback) {
+    const payload = {
+      boardId,
+      list: {
+        title: listTitle
+      }
+    };
+    return axios
+      .post(routes.CREATE_LIST_URL, payload)
       .then(unwrapData)
       .then(callback)
       .catch(logError);

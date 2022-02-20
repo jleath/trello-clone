@@ -8,11 +8,11 @@ const CardSchema = new Schema({
   },
   description: String,
   boardId: {
-    type: Number,
+    type: Schema.Types.ObjectId,
     required: [true, "Board ID is required"],
   },
   listId: {
-    type: Number,
+    type: Schema.Types.ObjectId,
     required: [true, "List ID is required"],
   },
   position: {
