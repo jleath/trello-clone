@@ -23,7 +23,7 @@ const CardSchema = new Schema({
   archived: Boolean,
   dueDate: Date,
   completed: Boolean,
-  comments: [String],
+  comments: [{ type: [Schema.Types.ObjectId], ref: "Comment" }],
   actions: [{type: [Schema.Types.ObjectId], ref: "Action" }],
   commentsCount: Number,
 },
