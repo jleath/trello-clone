@@ -6,6 +6,7 @@ import { fetchBoard, fetchBoards } from "../../actions/BoardActions";
 import Lists from './Lists';
 import Header from './Header';
 import MenuSidebar from './MenuSidebar';
+import CardModal from './CardModal';
 
 const SingleBoard = () => {
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ const SingleBoard = () => {
         <Header board={board}/>
         <Lists boardId={board._id} />
         <MenuSidebar />
-        <div id="modal-container"></div>
+        <CardModal />
         <div id="dropdown-container"></div>
       </>
     );

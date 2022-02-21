@@ -1,10 +1,18 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { selectCard } from '../../actions/CardActions';
 
 const SingleCard = ({card}) => {
+  const dispatch = useDispatch();
+
+  const handleCardClick = e => {
+    e.preventDefault();
+    dispatch(selectCard(card));
+  }
 
   return (
     <div className="card-background">
-      <div className="card ">
+      <div className="card" onClick={handleCardClick}>
         <i className="edit-toggle edit-icon sm-icon"></i>
         <div className="card-info">
           <div className="card-label green colorblindable"></div>
@@ -28,7 +36,7 @@ const SingleCard = ({card}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SingleCard;
