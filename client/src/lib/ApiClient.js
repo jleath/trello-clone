@@ -52,7 +52,18 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
-  }
+  },
+  updateList: function(listId, newTitle, listPosition, callback) {
+    const payload = {
+      title: newTitle,
+      position: listPosition,
+    };
+    return axios
+      .patch(`${routes.EDIT_LIST_URL}/${listId}`, payload)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError)
+  },
 };
 
 export default apiClient;

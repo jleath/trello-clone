@@ -8,6 +8,19 @@ export default function lists(state = [], action) {
     case types.CREATE_LIST_SUCCESS: {
       return [ ...state, action.newList ];
     }
+    case types.UPDATE_LIST_SUCCESS: {
+      return state.map(list => {
+        if (list._id !== action.patchedList._id) {
+          return list
+        } else {
+          return {
+            ...list,
+            title: action.patchedList.title,
+            position: action.patchedList.position,
+          };
+        }
+      });
+    }
     default: {
       return state;
     }
