@@ -14,14 +14,3 @@ const ActionSchema = new Schema({
 const Action = mongoose.model('Action', ActionSchema);
 
 module.exports = Action;
-
-
-/*
-"actions": [
-  {
-
-    "description": " added this card to My list",
-
-    "card_id": 9
-  }
-*/
