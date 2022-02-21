@@ -1,12 +1,11 @@
 import React from "react";
+import ListTitle from './ListTitle';
 
-const ListDropdown = ({ listTitle }) => {
+const ListDropdown = ({ list}) => {
   return (
     <>
       <a className="more-icon sm-icon" href=""></a>
-      <div>
-        <p className="list-title">{listTitle}</p>
-      </div>
+      <ListTitle list={list} />
       <div className="add-dropdown add-top">
         <div className="card"></div>
         <a className="button">Add</a>

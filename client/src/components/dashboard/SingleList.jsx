@@ -15,7 +15,7 @@ const SingleList = ({ list }) => {
     <div className={focus ? 'list-wrapper add-dropdown-active' : 'list-wrapper'}>
       <div className="list-background">
         <div className="list">
-          <ListDropdown listTitle={list.title} />
+          <ListDropdown list={list} />
           <Cards listId={list._id}/>
           <NewCard onFocusToggle={toggleFocus}/>  
         </div>

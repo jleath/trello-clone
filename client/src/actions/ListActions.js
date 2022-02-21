@@ -6,7 +6,14 @@ export function createListSuccess(newList) {
     type: types.CREATE_LIST_SUCCESS,
     newList
   };
-};
+}
+
+export function updateListSuccess(patchedList) {
+  return {
+    type: types.UPDATE_LIST_SUCCESS,
+    patchedList,
+  };
+}
 
 export function createList(boardId, listTitle, callback) {
   return function(dispatch) {
@@ -15,6 +22,14 @@ export function createList(boardId, listTitle, callback) {
       if (callback) { 
         callback(data.newList);
       }
+    });
+  };
+}
+
+export function updateList(listId, title, position) {
+  return function(dispatch) {
+    apiClient.updateList(listId, title, position, data => {
+      dispatch(updateListSuccess(data.patchedList));
     });
   };
 }
