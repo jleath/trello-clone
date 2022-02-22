@@ -1,9 +1,17 @@
+import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
 
-export const selectCard = selectedCard => {
+export function fetchCardSuccess(cardId) {
   return {
-    type: types.SELECT_CARD,
-    selectedCard,
+    type: types.FETCH_CARD_SUCCESS,
+    cardId
   };
-};
+}
 
+export function fetchCard(cardId) {
+  return function(dispatch) {
+    apiClient.fetchCard(cardId, data => {
+      dispatch(fetchCardSuccess(data.card));
+    });
+  };
+}

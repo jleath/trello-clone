@@ -1,4 +1,4 @@
-import * as types from "../constants/ActionTypes"; 
+import * as types from "../constants/ActionTypes";
 
 export default function cards(state = [], action) {
   switch (action.type) {
@@ -9,6 +9,6 @@ export default function cards(state = [], action) {
     }
     default: {
       return state;
-    } 
+    }
   }
 }

@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectCard } from '../../actions/CardActions';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Labels from './labels';
+import { useParams, Link } from 'react-router-dom';
+import { fetchCard } from '../../actions/CardActions';
 
 const CardModal = () => {
-  const selectedCard = useSelector(state => state.selectedCard);
-  const list = useSelector(state => state.lists.find(list => list._id === selectedCard.listId));
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const handleCloseClick = e => {
-    e.preventDefault();
-    dispatch(selectCard({}));
-  };
-  
+  const id = useParams().id;
+  let selectedCard = useSelector(state => state.cards.find(card => card._id === id));
+  const list = useSelector(state => state.lists.find(list => list._id === selectedCard.listId));
+
+  const checkForCard = () => {
+    if (!selectedCard) {
+      dispatch(fetchCard(id));
+    }
+  }
+
+  useEffect(() => {
+    checkForCard();
+  }, [])
+
   const pastDue = () => {
     return Date.now() > Date.parse(selectedCard.dueDate);
   };
@@ -24,9 +34,6 @@ const CardModal = () => {
   };
 
   const dueDateClass = () => {
-    if (!selectedCard) {
-      return '';
-    }
     let className = '';
     if (selectedCard.completed) {
       className += 'completed ';
@@ -42,12 +49,16 @@ const CardModal = () => {
   } else {
     return (
       <div id="modal-container">
-        <div className="screen" onClick={() => dispatch(selectCard({}))}></div>
+        <Link to={`/boards/${selectedCard.boardId}`} >
+        <div className="screen" ></div>
+        </Link>
         <div id="modal">
-          <i className="x-icon icon close-modal" onClick={handleCloseClick}></i>
+          <Link to={`/boards/${selectedCard.boardId}`} >
+          <i className="x-icon icon close-modal" ></i>
+          </Link>
           <header>
             <i className="card-icon icon .close-modal"></i>
-            <textarea className="list-title" style={{ height: "45px" }} value={selectedCard.title} />
+            <textarea className="list-title" style={{ height: "45px" }} defaultValue={selectedCard.title} />
             <p>
               in list <a className="link">{list ? list.title : ''}</a>
               <i className="sub-icon sm-icon"></i>
@@ -57,30 +68,7 @@ const CardModal = () => {
             <ul className="modal-outer-list">
               <li className="details-section">
                 <ul className="modal-details-list">
-                  <li className="labels-section">
-                    <h3>Labels</h3>
-                    <div className="member-container">
-                      <div className="green label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="yellow label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="orange label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="blue label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="purple label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <div className="red label colorblindable"></div>
-                    </div>
-                    <div className="member-container">
-                      <i className="plus-icon sm-icon"></i>
-                    </div>
-                  </li>
+                  <Labels labels={selectedCard.labels} />
                   <li className="due-date-section">
                     <h3>Due Date</h3>
                     <div id="dueDateDisplay" className={dueDateClass()}>
@@ -132,7 +120,7 @@ const CardModal = () => {
                         <input
                           type="submit"
                           className="button not-implemented"
-                          value="Save"
+                          defaultValue="Save"
                         />
                       </div>
                     </label>
@@ -172,7 +160,7 @@ const CardModal = () => {
                           <input
                             type="submit"
                             className="button not-implemented"
-                            value="Save"
+                            defaultValue="Save"
                           />
                           <i className="x-icon icon"></i>
                         </div>
@@ -215,7 +203,7 @@ const CardModal = () => {
                           <input
                             type="submit"
                             className="button not-implemented"
-                            value="Save"
+                            defaultValue="Save"
                           />
                           <i className="x-icon icon"></i>
                         </div>
@@ -273,3 +261,17 @@ const CardModal = () => {
 };
 
 export default CardModal;
+
+/*
+in card model fetch card
+
+in singleboard functino to get boardid
+  will be from url or from card.baordid
+
+  in single baord useeffect
+    in !board id
+      return
+    else
+      fetch board
+
+*/

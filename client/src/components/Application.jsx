@@ -15,6 +15,7 @@ import MoveCardPopover from "./ui/MoveCardPopover";
 import UISingleBoard from "./ui/SingleBoard";
 
 import SingleBoard from "./dashboard/SingleBoard";
+import CardModal from "./dashboard/CardModal";
 
 const Application = () => {
   return (
@@ -22,7 +23,8 @@ const Application = () => {
       <TopNav />
       <Switch>
         <Route path="/" exact component={BoardsDashboardContainer} />
-        <Route path="/boards/:id" component={SingleBoard}/>
+        <Route path="/(boards|cards)/:id" component={SingleBoard}/>
+        <Route path="/cards/:id" component={CardModal}/>
         <Route path="/ui" exact component={UISection} />
         <Route path="/ui/allBoards" component={AllBoards} />
         <Route path="/ui/cardArchived" component={CardArchived} />
