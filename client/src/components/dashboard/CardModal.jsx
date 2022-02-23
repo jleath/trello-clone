@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,16 +12,18 @@ const CardModal = () => {
   const id = useParams().id;
   let selectedCard = useSelector(state => state.cards.find(card => card._id === id));
   const list = useSelector(state => state.lists.find(list => list._id === selectedCard.listId));
+  console.log('SelectedCardFromModal:', selectedCard)
 
-  const checkForCard = () => {
-    if (!selectedCard) {
-      dispatch(fetchCard(id));
-    }
-  }
+
+  const [cardFetched, setCardFetched] = useState(false)
+
 
   useEffect(() => {
-    checkForCard();
-  }, [])
+    if (!cardFetched) {
+      console.log('In card effect')
+      dispatch(fetchCard(id, () => setCardFetched(true)));
+    }
+  }, [cardFetched, dispatch, id])
 
   const pastDue = () => {
     return Date.now() > Date.parse(selectedCard.dueDate);
@@ -44,7 +46,7 @@ const CardModal = () => {
     return className;
   }
 
-  if (Object.keys(selectedCard).length === 0) {
+  if (!selectedCard) {
     return null;
   } else {
     return (

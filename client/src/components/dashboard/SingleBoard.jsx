@@ -9,21 +9,39 @@ import MenuSidebar from './MenuSidebar';
 
 const SingleBoard = () => {
   const dispatch = useDispatch()
+  const location = useLocation()
 
-  const getBoardId = (id) => {
-    const location = useLocation()
-    if (location.pathname.includes("board")) {
+  const getBoardId = (id, cards) => {    
+   
+    if (location.pathname.includes("boards")) {
       return id
     } else {
-      return useSelector(state => state.singleCard.boardId)
+      console.log("getBoard", cards)
+      const card = cards.find(c => c._id === id)
+      if (card) {
+        return card.boardId;
+      }
     }
+    return null;
   }
 
-  const id = getBoardId(useParams().id);
+  
+  const cards = useSelector(state => state.cards);
+  console.log("cards undefined", cards)
+  const id = getBoardId(useParams().id, cards);
   const board = useSelector(state => state.boards.find(board => board._id === id));
+  console.log('Rerendering singleboard')
+
+  console.log('Cards:', cards)
 
   useEffect(() => {
-    dispatch(fetchBoard(id));
+    if (id) {
+      dispatch(fetchBoard(id));
+    } else {
+
+      console.log('I do nothing!')
+    }
+    
   }, [dispatch, id])
 
   if (!board) {
