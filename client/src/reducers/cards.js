@@ -8,10 +8,8 @@ export default function cards(state = [], action) {
       }, [])
     }
     case types.FETCH_CARD_SUCCESS: {
-      console.log(action)
       const card = state.find(c => c._id === action.card._id)
-      console.log("action", action.card)
-      console.log(card)
+      
       if (!card) {
         return state.concat(action.card)
       }

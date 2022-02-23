@@ -1,6 +1,9 @@
+import React from "react";
 
-const Comments = ({ comments }) => {
-  <li className="comment-section">
+const CommentSection = () => {
+
+  return (
+    <li className="comment-section">
     <h2 className="comment-icon icon">Add Comment</h2>
     <div>
       <div className="member-container">
@@ -30,6 +33,7 @@ const Comments = ({ comments }) => {
       </div>
     </div>
   </li>
+  )
 }
 
-export default Comments;
+export default CommentSection;

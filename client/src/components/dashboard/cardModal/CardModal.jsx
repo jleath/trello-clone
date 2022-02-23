@@ -1,26 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-
-import Labels from './labels';
+import Labels from './Labels';
+import CommentSection from './CommentSection';
 import { useParams, Link } from 'react-router-dom';
-import { fetchCard } from '../../actions/CardActions';
+import { fetchCard } from '../../../actions/CardActions';
+
 
 const CardModal = () => {
-  const dispatch = useDispatch()
+  const [cardFetched, setCardFetched] = useState(false)
 
+  const dispatch = useDispatch();
   const id = useParams().id;
   let selectedCard = useSelector(state => state.cards.find(card => card._id === id));
   const list = useSelector(state => state.lists.find(list => list._id === selectedCard.listId));
-  console.log('SelectedCardFromModal:', selectedCard)
-
-
-  const [cardFetched, setCardFetched] = useState(false)
-
 
   useEffect(() => {
     if (!cardFetched) {
-      console.log('In card effect')
       dispatch(fetchCard(id, () => setCardFetched(true)));
     }
   }, [cardFetched, dispatch, id])
@@ -78,7 +74,7 @@ const CardModal = () => {
                         id="dueDateCheckbox"
                         type="checkbox"
                         className="checkbox"
-                        checked=""
+                        defaultChecked=""
                       />
                       {parseDueDate()}
                     </div>
@@ -99,36 +95,7 @@ const CardModal = () => {
                   </p>
                 </form>
               </li>
-              <li className="comment-section">
-                <h2 className="comment-icon icon">Add Comment</h2>
-                <div>
-                  <div className="member-container">
-                    <div className="card-member">TP</div>
-                  </div>
-                  <div className="comment">
-                    <label>
-                      <textarea
-                        required=""
-                        rows="1"
-                        placeholder="Write a comment..."
-                      ></textarea>
-                      <div>
-                        <a className="light-button card-icon sm-icon"></a>
-                        <a className="light-button smiley-icon sm-icon"></a>
-                        <a className="light-button email-icon sm-icon"></a>
-                        <a className="light-button attachment-icon sm-icon"></a>
-                      </div>
-                      <div>
-                        <input
-                          type="submit"
-                          className="button not-implemented"
-                          defaultValue="Save"
-                        />
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </li>
+              <CommentSection  />
               <li className="activity-section">
                 <h2 className="activity-icon icon">Activity</h2>
                 <ul className="horiz-list">
@@ -149,9 +116,7 @@ const CardModal = () => {
                     </small>
                     <div className="comment">
                       <label>
-                        <textarea required="" rows="1">
-                          The activities have not been implemented yet.
-                        </textarea>
+                        <textarea required="" rows="1" defaultValue="The activities have not been implemented yet."/>
                         <div>
                           <a className="light-button card-icon sm-icon"></a>
                           <a className="light-button smiley-icon sm-icon"></a>
@@ -192,9 +157,7 @@ const CardModal = () => {
                     </small>
                     <div className="comment">
                       <label>
-                        <textarea required="" rows="1">
-                          Example of a comment.
-                        </textarea>
+                        <textarea required="" rows="1" defaultValue="Example of a comment."/>
                         <div>
                           <a className="light-button card-icon sm-icon"></a>
                           <a className="light-button smiley-icon sm-icon"></a>
