@@ -5,16 +5,18 @@ const listsController = require("../controllers/listsController");
 const cardsController = require("../controllers/cardsController");
 const { validateBoard } = require("../validators/validators");
 
-router.get('/boards/:id', boardsController.getBoard );
+router.get('/boards/:id', boardsController.getBoard);
 
-router.get('/boards', boardsController.getBoards );
+router.get('/boards', boardsController.getBoards);
 
-router.post('/boards', validateBoard, boardsController.createBoard );
+router.post('/boards', validateBoard, boardsController.createBoard);
 
-router.patch('/lists/:id', listsController.patchList );
+router.patch('/lists/:id', listsController.patchList);
 
-router.post('/lists', listsController.createList );
+router.post('/lists', listsController.createList);
 
-router.get('/cards/:id', cardsController.getCard );
+router.get('/cards/:id', cardsController.getCard);
+
+router.post('/cards', cardsController.createCard);
 
 module.exports = router;
