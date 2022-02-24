@@ -64,7 +64,7 @@ const apiClient = {
       .then(callback)
       .catch(logError)
   },
-  fetchCard: function(cardId) {
+  fetchCard: function(cardId, callback) {
     return axios
       .get(`${routes.FETCH_CARD_URL}/${cardId}`)
       .then(unwrapData)

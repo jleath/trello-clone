@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ListDropdown from './ListDropdown';
-import Cards from './Cards';
+import Cards from '../cards/Cards';
 import NewCard from './NewCard';
 
 const SingleList = ({ list }) => {

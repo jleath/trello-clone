@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateList } from '../../actions/ListActions';
+import { updateList } from '../../../actions/ListActions';
 
 const ListTitle = ({ list }) => {
   const [ titleInput, setTitleInput ] = useState(list.title);

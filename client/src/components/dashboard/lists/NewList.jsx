@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createList } from "../../actions/ListActions";
+import { createList } from "../../../actions/ListActions";
 
 const NewList = ({ boardId }) => {
   const [ newListActive, setNewListActive ] = useState(false);

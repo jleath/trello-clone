@@ -14,9 +14,6 @@ const getBoard = async (req, res, next) => {
       path:"lists",
       populate: {
         path: "cards",
-        populate: {
-          path: "actions",
-        },
       },
     });
 

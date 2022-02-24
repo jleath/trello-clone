@@ -1,17 +1,20 @@
 import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
 
-export function fetchCardSuccess(cardId) {
+export function fetchCardSuccess(card) {
   return {
     type: types.FETCH_CARD_SUCCESS,
-    cardId
+    card
   };
 }
 
-export function fetchCard(cardId) {
+export function fetchCard(cardId, callback) {
   return function(dispatch) {
     apiClient.fetchCard(cardId, data => {
-      dispatch(fetchCardSuccess(data.card));
+      dispatch(fetchCardSuccess(data));
+      if (callback) {
+        callback();
+      }
     });
   };
 }

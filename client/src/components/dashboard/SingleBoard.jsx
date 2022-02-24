@@ -1,29 +1,22 @@
 import React, { useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
-import { fetchBoard, fetchBoards } from "../../actions/BoardActions";
-import Lists from './Lists';
+import { fetchBoard } from "../../actions/BoardActions";
+import Lists from './lists/Lists';
 import Header from './Header';
 import MenuSidebar from './MenuSidebar';
 
 const SingleBoard = () => {
-  const dispatch = useDispatch()
-
-  const getBoardId = (id) => {
-    const location = useLocation()
-    if (location.pathname.includes("board")) {
-      return id
-    } else {
-      return useSelector(state => state.singleCard.boardId)
-    }
-  }
-
-  const id = getBoardId(useParams().id);
+  const location = useLocation();
+  const cards = useSelector(state => state.cards);
+  const id = getBoardId(useParams().id, cards, location);
   const board = useSelector(state => state.boards.find(board => board._id === id));
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchBoard(id));
+    if (id) {
+      dispatch(fetchBoard(id));
+    }    
   }, [dispatch, id])
 
   if (!board) {
@@ -39,5 +32,17 @@ const SingleBoard = () => {
     );
   }
 };
+
+function getBoardId(id, cards, location) {  
+  if (location.pathname.includes("boards")) {
+    return id
+  } else {
+    const card = cards.find(c => c._id === id)
+    if (card) {
+      return card.boardId;
+    }
+  }
+  return null;
+}
 
 export default SingleBoard;
