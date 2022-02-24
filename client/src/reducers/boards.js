@@ -11,7 +11,7 @@ export default function boards(state = [], action) {
     }
     case types.FETCH_BOARD_SUCCESS: {
       if (state.find(b => b._id === action.board._id )) {
-        return state
+        return state;
       }
       return state.concat(action.board);
     }
