@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 
 const Comment = ({ comment }) => {
   return (
@@ -65,9 +64,13 @@ const ActivitySection = ({ selectedCard }) => {
       <ul className="modal-activity-list">
         {
           chimera.map(c =>
-            !c.description
-              ? <Comment key={c._id} comment={c} />
-              : <Action key={c._id} action={c} />
+            <React.Fragment key={c._id}>
+              {
+                !c.description
+                  ? <Comment comment={c} />
+                  : <Action action={c} />
+              }
+            </React.Fragment>
           )
         }
       </ul>

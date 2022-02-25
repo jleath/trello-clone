@@ -71,6 +71,13 @@ const apiClient = {
       .then(callback)
       .catch(logError)
   },
+  createCard: function(listId, cardName, callback)  {
+    return axios
+      .post(`${routes.CREATE_CARD_URL}`, { listId, card: { title: cardName } })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  }
 };
 
 export default apiClient;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import Labels from './Labels';
@@ -8,20 +8,13 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchCard } from '../../../actions/CardActions';
 
 const CardModal = () => {
-  //const [cardFetched, setCardFetched] = useState(false)
-  //const [selectedCard, setSelectedCard] = useState(null);
   const dispatch = useDispatch();
   const id = useParams().id;
   let selectedCard = useSelector(state => state.cards.find(card => card._id === id));
   const list = useSelector(state => state.lists.find(list => list._id === selectedCard.listId));
 
-  console.log("selectedCard in CardModal", selectedCard);
-
   useEffect(() => {
     dispatch(fetchCard(id));
-  //  if (!cardFetched) {
-
-  //  }
   }, [dispatch, id])
 
   const pastDue = () => {
@@ -149,17 +142,3 @@ const CardModal = () => {
 };
 
 export default CardModal;
-
-/*
-in card model fetch card
-
-in singleboard functino to get boardid
-  will be from url or from card.baordid
-
-  in single baord useeffect
-    in !board id
-      return
-    else
-      fetch board
-
-*/

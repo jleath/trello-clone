@@ -17,7 +17,7 @@ const SingleList = ({ list }) => {
         <div className="list">
           <ListDropdown list={list} />
           <Cards listId={list._id}/>
-          <NewCard onFocusToggle={toggleFocus}/>  
+          <NewCard onFocusToggle={toggleFocus} listId={list._id}/>  
         </div>
       </div>
     </div>
